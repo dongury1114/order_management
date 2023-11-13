@@ -24,7 +24,7 @@ class SMSManager:
         return signature.decode('UTF-8')
 
     def _get_headers(self):
-        timestamp = str(int(time.time() * 1000))
+        timestamp = str(int((time.time()-290) * 1000))
         signature = self._make_signature(timestamp)
         
         return {

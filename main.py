@@ -28,17 +28,16 @@ def main():
         return
 
     print("프로그램이 시작되었습니다.")
-    # sms_manager.send_sms("01053698401", "01053698401", "이력서 빨리 써라")
+    # sms_manager.send_sms("01053698401", "01053698401", "hello world")
 
     try:
         while True:
             # 토큰 만료가 임박하면 갱신합니다.
             if expires_in <= 1800:
-                token = token_manager.update_token()
-                if token is None:
+                current_token = token_manager.update_token()
+                if current_token is None:
                     slack_manager.send_slack_log("토큰 갱신 실패.")
-                    continue  # 갱신 실패 시 다음 반복으로 넘어갑니다.
-
+                    continue
                 print("토큰이 갱신되었습니다.")
             else:
                 token_info = token_manager.get_token()
@@ -49,7 +48,6 @@ def main():
 
             order_details = order_manager.check_new_orders()
             if order_details:
-                print("@@@@@@@@@@@@@@@@@@@@@", order_details)
                 csv_manager.write_order_to_csv(order_details)
                 slack_manager.send_order_details_notification(order_details)
             time.sleep(30)  # 30초마다 반복합니다.
