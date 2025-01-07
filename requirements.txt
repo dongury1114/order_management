@@ -1,0 +1,5 @@
+bcrypt
+pybase64
+requests
+python-dotenv
+pytest
